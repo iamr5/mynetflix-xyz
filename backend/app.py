@@ -1,9 +1,12 @@
 from flask import Flask, request, jsonify, send_file
 import pandas as pd
-import imdb
+import requests
 
 app = Flask(__name__)
-ia = imdb.IMDb()
+
+# Reemplaza 'YOUR_API_KEY' con tu API Key de OMDB
+OMDB_API_KEY = 'fe13f3c9'
+OMDB_API_URL = 'http://www.omdbapi.com/'
 
 @app.route('/upload', methods=['POST'])
 def upload_file():
@@ -21,11 +24,22 @@ def upload_file():
 def update_titles(df):
     for index, row in df.iterrows():
         title = row['title']
-        results = ia.search_movie(title)
-        if results:
-            canonical_title = results[0]['title']
+        canonical_title = get_canonical_title(title)
+        if canonical_title:
             df.at[index, 'title'] = canonical_title
     return df
+
+def get_canonical_title(title):
+    params = {
+        't': title,
+        'apikey': OMDB_API_KEY
+    }
+    response = requests.get(OMDB_API_URL, params=params)
+    if response.status_code == 200:
+        data = response.json()
+        if 'Title' in data:
+            return data['Title']
+    return None
 
 @app.route('/download', methods=['GET'])
 def download_file():
