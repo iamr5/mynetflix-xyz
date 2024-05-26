@@ -1,14 +1,26 @@
 document.getElementById('file-input').addEventListener('change', handleFileUpload);
 
-function handleFileUpload(event) {
+async function handleFileUpload(event) {
     const file = event.target.files[0];
     if (file) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            const content = e.target.result;
-            parseCSV(content);
-        };
-        reader.readAsText(file);
+        const formData = new FormData();
+        formData.append('file', file);
+
+        const response = await fetch('/upload', {
+            method: 'POST',
+            body: formData
+        });
+
+        const result = await response.json();
+        if (response.ok) {
+            document.getElementById('message').innerText = result.message;
+            document.getElementById('download').style.display = 'block';
+            document.getElementById('download').addEventListener('click', () => {
+                window.location.href = '/download';
+            });
+        } else {
+            document.getElementById('message').innerText = result.error;
+        }
     }
 }
 
@@ -156,4 +168,3 @@ function initializeApp(titles) {
     // Start with the first title
     updateCard();
 }
-
