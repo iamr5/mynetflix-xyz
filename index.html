@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Netflix Tinder</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+    <div id="upload-screen">
+        <h1>Sube acá tu historial de vistas de Netflix y empieza a dar tus opiniones</h1>
+        <label id="file-upload-button" class="button">
+            <span class="material-icons">file_upload</span>
+            <span>Subir archivo</span>
+            <input type="file" id="file-input" accept=".csv">
+        </label>
+        <p>¿Aún no tienes tu historial de Netflix?</p>
+        <label id="download-netflix-history" class="button" onclick="openNetflixHistory()">
+            <span class="material-icons">download</span>Descargar
+        </label>
+    </div>
+    <div id="app" style="display: none;">
+        <button id="previous"><span class="material-icons">arrow_back</span></button>
+        <div id="counter"></div>
+        <div id="card-container"></div>
+        <div id="buttons">
+            <div class="row">
+                <button id="dont-remember"><span class="material-icons">help_outline</span></button>
+                <button id="add-to-list"><span class="material-icons">playlist_add</span></button>
+            </div>
+            <div class="row">
+                <button id="dislike"><span class="material-icons">thumb_down</span></button>
+                <button id="like"><span class="material-icons">thumb_up</span></button>
+                <button id="love"><span class="material-icons">favorite</span></button>
+            </div>
+        </div>
+        <button id="download" style="display: none;"><span class="material-icons">download</span></button>
+    </div>
+    <script src="script.js"></script>
+    <script>
+        function openNetflixHistory() {
+            window.open('https://www.netflix.com/login?nextpage=https%3A%2F%2Fwww.netflix.com%2Fsettings%2Fviewed', '_blank');
+        }
+
+        document.getElementById('file-input').addEventListener('change', handleFileUpload);
+
+        function handleFileUpload(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const content = e.target.result;
+                    parseCSV(content);
+                };
+                reader.readAsText(file);
+            }
+        }
+    </script>
+</body>
+</html>
