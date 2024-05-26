@@ -1,11 +1,12 @@
 from flask import Flask, request, jsonify, send_file
 import pandas as pd
 import requests
+import os
 
 app = Flask(__name__)
 
-# Reemplaza 'YOUR_API_KEY' con tu API Key de OMDB
-OMDB_API_KEY = 'fe13f3c9'
+# Obtener la API Key de las variables de entorno
+OMDB_API_KEY = os.getenv('OMDB_API_KEY')
 OMDB_API_URL = 'http://www.omdbapi.com/'
 
 @app.route('/upload', methods=['POST'])
@@ -19,7 +20,7 @@ def upload_file():
         df = pd.read_csv(file)
         df = update_titles(df)
         df.to_csv('backend/updated_titles.csv', index=False)
-        return jsonify({"message": "File processed successfully", "file": "updated_titles.csv"})
+        return jsonify({"message": "File processed successfully", "file": "backend/updated_titles.csv"})
 
 def update_titles(df):
     for index, row in df.iterrows():
@@ -46,4 +47,5 @@ def download_file():
     return send_file('backend/updated_titles.csv', as_attachment=True)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port)
