@@ -159,3 +159,8 @@ function initializeApp(titles) {
     // Start with the first title
     updateCard();
 }
+
+
+    // Start with the first title
+    updateCard();
+}
