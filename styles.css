@@ -1,22 +1,32 @@
 body {
     font-family: Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #f4f4f4;
     margin: 0;
     padding: 0;
-    position: relative;
+    background-color: #f4f4f4;
+    overflow: auto;
 }
 
-#upload-screen {
+#upload-screen, #new-section, #app {
     text-align: center;
+    padding: 20px;
 }
 
-#upload-screen p {
+.logo {
+    width: 200px;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+#upload-screen p, #new-section p, #new-section ol {
     margin-top: 20px;
     font-size: 18px;
+}
+
+.instruction-image {
+    width: 500px;
+    height: 300px;
+    object-fit: cover;
+    margin: 10px 0;
 }
 
 .button {
@@ -72,6 +82,7 @@ body {
     font-size: 18px;
     text-align: center;
     position: relative;
+    margin: 0 auto; /* Center horizontally */
 }
 
 #buttons {
@@ -132,4 +143,29 @@ button:hover {
 #counter {
     margin-bottom: 20px;
     font-size: 18px;
+}
+
+#back-to-landing {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    background-color: #e0e0e0;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+
+#back-to-landing:hover {
+    background-color: #d0d0d0;
+}
+
+#back-to-landing .material-icons {
+    font-size: 24px;
+    color: #000;
 }
