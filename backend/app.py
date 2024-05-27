@@ -1,13 +1,17 @@
-from flask import Flask, request, jsonify, send_file
+from flask import Flask, request, jsonify, send_file, render_template
 import pandas as pd
 import requests
 import os
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder="../", static_url_path="", template_folder="../")
 
 # Obtener la API Key de las variables de entorno
 OMDB_API_KEY = os.getenv('OMDB_API_KEY')
 OMDB_API_URL = 'http://www.omdbapi.com/'
+
+@app.route('/')
+def index():
+    return render_template('index.html')
 
 @app.route('/upload', methods=['POST'])
 def upload_file():
@@ -49,3 +53,4 @@ def download_file():
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
     app.run(host='0.0.0.0', port=port)
+
