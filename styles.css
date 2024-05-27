@@ -3,12 +3,20 @@ body {
     margin: 0;
     padding: 0;
     background-color: #f4f4f4;
-    overflow: auto;
+    height: 100vh; /* Ajustar la altura del body */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; /* Ocultar scrolls innecesarios */
 }
 
 #upload-screen, #new-section, #app {
     text-align: center;
     padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .logo {
@@ -65,6 +73,11 @@ body {
 
 #app {
     text-align: center;
+    height: 100vh; /* Ajustar la altura del app */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 #card-container {
@@ -169,3 +182,4 @@ button:hover {
     font-size: 24px;
     color: #000;
 }
+
