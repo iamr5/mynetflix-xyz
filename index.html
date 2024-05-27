@@ -9,6 +9,7 @@
 </head>
 <body>
     <div id="upload-screen">
+        <img src="https://cdn.discordapp.com/attachments/1081224783703842836/1244510676303482981/Sin-titulo-1.png?ex=66556063&is=66540ee3&hm=52ac1fca63230a000e3acd2fffd57d7ca23f688a76e9a646a6bdad8ccd89de64&" alt="Logo" class="logo">
         <h1>Sube tu historial de Netflix, da tus opiniones al respecto y obten recomendaciones únicas</h1>
         <label id="file-upload-button" class="button">
             <span class="material-icons">file_upload</span>
@@ -16,8 +17,25 @@
             <input type="file" id="file-input" accept=".csv">
         </label>
         <p>¿Aún no tienes tu historial de Netflix?</p>
-        <label id="download-netflix-history" class="button" onclick="openNetflixHistory()">
+        <label id="download-netflix-history" class="button" onclick="showNewSection()">
             <span class="material-icons">download</span>Descargar
+        </label>
+    </div>
+    <div id="new-section" style="display: none;">
+        <button id="back-to-landing"><span class="material-icons">arrow_back</span></button>
+        <h1>Descargar tu historial es fácil</h1>
+        <p>Acá uno paso a paso</p>
+        <ol>
+            <li>Al hacer click se abrirá Netflix, debes hacer login</li>
+            <img src="https://cdn.discordapp.com/attachments/1081224783703842836/1244473759772184616/LogInNetflix.jpg?ex=66553e01&is=6653ec81&hm=e7b1cde8d208a15af1d3990136389ba7df7230c218a8ce5aabd735068b92d6aa&" alt="Descargar Opción" class="instruction-image">
+            <li>Bajas hasta el final de la página de tu historial (asegúrate que la foto de perfil que sale en la esquina superior derecha sea la tuya 😀, si no lo es cámbiala y luego pon retroceder en tu browser)</li>
+            <img src="https://media.discordapp.net/attachments/1081224783703842836/1244505370261459029/Screenshot_3.jpg?ex=66555b72&is=665409f2&hm=cbff810159d56cae643002538f94c5890f083e9cce892cf30d19aee3f5ef7921&=&format=webp&width=1440&height=494" alt="Log In" class="instruction-image">
+            <li>Recuerda el nombre del archivo para que sepas cómo se llama al subirlo</li>
+            <img src="https://cdn.discordapp.com/attachments/1081224783703842836/1244505420362678372/Screenshot_4.jpg?ex=66555b7e&is=665409fe&hm=950800c12f7a3e976a6f12a5e35af6c79f9ffa5615b1fd6af3f3fa2f52d73e76&" alt="Historial de Netflix" class="instruction-image">
+            <li>Si estás list@, apreta "Hacerlo"</li>
+        </ol>
+        <label id="start-button" class="button" onclick="redirectToNetflix()">
+            Hacerlo
         </label>
     </div>
     <div id="app" style="display: none;">
@@ -38,24 +56,5 @@
         <button id="download" style="display: none;"><span class="material-icons">download</span></button>
     </div>
     <script src="script.js"></script>
-    <script>
-        function openNetflixHistory() {
-            window.open('https://www.netflix.com/settings/viewed', '_blank');
-        }
-
-        document.getElementById('file-input').addEventListener('change', handleFileUpload);
-
-        function handleFileUpload(event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const content = e.target.result;
-                    parseCSV(content);
-                };
-                reader.readAsText(file);
-            }
-        }
-    </script>
 </body>
 </html>
