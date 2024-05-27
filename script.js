@@ -12,6 +12,20 @@ function handleFileUpload(event) {
     }
 }
 
+function showNewSection() {
+    document.getElementById('upload-screen').style.display = 'none';
+    document.getElementById('new-section').style.display = 'block';
+}
+
+function redirectToNetflix() {
+    window.open('https://www.netflix.com/settings/viewed', '_blank');
+}
+
+document.getElementById('back-to-landing').addEventListener('click', () => {
+    document.getElementById('new-section').style.display = 'none';
+    document.getElementById('upload-screen').style.display = 'block';
+});
+
 function parseCSV(content) {
     const lines = content.split('\n');
     const titlesSet = new Set();
@@ -21,26 +35,12 @@ function parseCSV(content) {
         const line = lines[i];
         const [title] = line.split(',');
         if (title) {
-            // Detectar series limitadas
-            if (title.includes("Limited Series")) {
-                const limitedSeriesMatch = title.match(/(.+?): Limited Series/);
-                if (limitedSeriesMatch) {
-                    titlesSet.add(limitedSeriesMatch[1].trim());
-                }
+            // Extraer el nombre de la serie sin la temporada
+            const seriesNameMatch = title.match(/(.+?): (Season \d+|Limited Series|Part \d+|Chapter \d+)/);
+            if (seriesNameMatch) {
+                titlesSet.add(seriesNameMatch[1].trim());
             } else {
-                // Detectar series y temporadas
-                const seasonMatch = title.match(/(.+?): (Season \d+)/);
-                if (seasonMatch) {
-                    titlesSet.add(`${seasonMatch[1].trim()}: ${seasonMatch[2].trim()}`);
-                } else {
-                    // Agrupar títulos comunes
-                    const keywordMatch = title.match(/(.+? [\d\w]+)/);
-                    if (keywordMatch) {
-                        titlesSet.add(keywordMatch[1].trim());
-                    } else {
-                        titlesSet.add(title.trim());
-                    }
-                }
+                titlesSet.add(title.trim());
             }
         }
     }
@@ -138,6 +138,9 @@ function initializeApp(titles) {
             currentIndex--;
             preferences.pop();
             updateCard();
+        } else {
+            document.getElementById('app').style.display = 'none';
+            document.getElementById('upload-screen').style.display = 'block';
         }
     });
 
